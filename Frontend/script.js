@@ -4,7 +4,7 @@ function generateJoke() {
   var word = document.getElementById("word-input").value;
 
   // Make a POST request to the server endpoint
-  fetch("http://localhost:8080/", {
+  fetch("https://joke-generator-kbj7.onrender.com/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
