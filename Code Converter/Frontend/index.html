@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Webpage Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            flex: 1;
+            padding: 20px;
+            background-color: #f2f2f2;
+            box-sizing: border-box;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            resize: none;
+            /* Prevent resizing of textarea */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .heading {
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <select id="languageSelect">
+            <option>Choose language</option>
+            <option value="Python">Python</option>
+            <option value="Java">Java</option>
+            <option value="C++">C++</option>
+        </select>
+        <button id="convert">Convert</button>
+        <button id="debug">Debug</button>
+        <button id="check">Quality Check</button>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="heading">Input</div>
+            <textarea id="inputArea" rows="10" cols="30"></textarea>
+        </div>
+        <div class="content">
+            <div class="heading">Output</div>
+            <div id="outputArea"></div>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the elements
+        const languageSelect = document.getElementById('languageSelect');
+        const inputArea = document.getElementById('inputArea');
+        const outputArea = document.getElementById('outputArea');
+        const convertbutton = document.getElementById('convert');
+        const debugbutton = document.getElementById('debug');
+        const checkbutton = document.getElementById('check');
+
+
+        convertbutton.addEventListener('click', async function () {
+
+            let obj = {
+                language: languageSelect.value,
+                body: inputArea.value
+            };
+
+            let response = await fetch("http://localhost:8080/convert",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(obj)
+                })
+
+            let data = await response.text();
+            updateOutput(data);
+        });
+
+        debugbutton.addEventListener('click', async function () {
+
+            let obj = {
+                body: inputArea.value
+            };
+
+            let response = await fetch("http://localhost:8080/debug",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(obj)
+                })
+
+            let data = await response.text();
+            updateOutput(data);
+        });
+
+        checkbutton.addEventListener('click', async function () {
+
+            let obj = {
+                body: inputArea.value
+            };
+
+            let response = await fetch("http://localhost:8080/check",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(obj)
+                })
+
+            let data = await response.text();
+            updateOutput(data);
+        });
+
+
+        function updateOutput(response) {
+            outputArea.textContent = response;
+        }
+
+    </script>
+</body>
+
+</html>
