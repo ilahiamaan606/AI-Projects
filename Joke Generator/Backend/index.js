@@ -18,7 +18,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 app.get("/",(req,res)=>{
-    res.send("This is the Code Converter Backend deployed on Render")
+    res.send("This is the Joke Generator Backend deployed on Render")
 })
 
 
