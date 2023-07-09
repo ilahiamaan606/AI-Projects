@@ -17,6 +17,10 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration)
 
+app.get("/",(req,res)=>{
+    res.send("This is the Code Converter Backend deployed on Render")
+})
+
 
 app.post("/convert",async (req,res)=>{
     let {language,body}=req.body;
